@@ -1,0 +1,265 @@
+<masters>
+	<master idx="0" appTimePeriod="1000000" refClockSyncCycles="5">
+        <!--IMC IO-->
+        <slave idx="0" type="generic" vid="00090588" pid="0x00109252" configPdos="false">
+            <dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="0"/>     
+            <syncManager idx="2" dir="out">
+                <pdo idx="1600">            
+                    <!-- Digtial Outputs (ECAT-IMC)-->
+                    <pdoEntry idx="2300" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="out-00" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-01" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-02" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-03" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-04" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-05" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-06" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-07" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-08" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-09" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-10" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-11" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-12" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-13" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-14" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="out-15" halType="bit"/>
+                    </pdoEntry>  
+                    <pdoEntry idx="2310" subIdx="00" bitLen="16" halPin="DA-0" halType="float" scale="1"/> <!--DA=OutputVoltage*4096/10; Range:0~x0FFF-->
+                    <pdoEntry idx="2311" subIdx="00" bitLen="16" halPin="DA-1" halType="s32"/>
+                    <!--Sharing PWM1 and PWM2-->
+                    <pdoEntry idx="2320" subIdx="00" bitLen="16" halPin="PwmFreq-0" halType="s32"/> <!--Fpwm=OutputFPWM*65536; Range:0~xFFFFFFFF,ActualOutput:0~65536-->
+                    <pdoEntry idx="2321" subIdx="00" bitLen="16" halPin="PwmFreq-1" halType="s32"/> <!--VFD(VariableFrequencyDrive)Spindle: 0~10V-->
+                    <pdoEntry idx="2330" subIdx="00" bitLen="16" halPin="PwmProp-0" halType="s32"/> <!--Ppwm=OutputPPWM*65536; Range:0~xFFFF,ActualOutput0~0.9999-->
+                    <pdoEntry idx="2331" subIdx="00" bitLen="16" halPin="PwmProp-1" halType="s32"/>
+                </pdo>
+            </syncManager>      
+            <syncManager idx="3" dir="in">
+                <pdo idx="1A00">	
+                    <!-- Digtial_inputs  -->
+                    <pdoEntry idx="2000" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="in-00" halType="bit"/>	
+                        <complexEntry bitLen="1" halPin="in-01" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-02" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-03" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-04" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-05" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-06" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-07" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-08" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-09" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-10" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-11" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-12" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-13" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-14" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-15" halType="bit"/>
+                    </pdoEntry>  
+                </pdo>
+            </syncManager>
+        </slave>
+        <!--joint 0-->
+		<slave idx="1" type="generic" vid="00004321" pid="00000100" configPdos="true">
+		    <dcConf assignActivate="0300" sync0Cycle="*1" sync0Shift="0" />
+            <!-- RxPdo -->
+		    <syncManager idx="2" dir="out">
+                <pdo idx="1600">
+                    <pdoEntry idx="6040" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="X-cmd-SwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-cmd-EnableVoltage" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-cmd-QuickStop" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-cmd-EnableOperation" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-cmd-OPmodeRel1" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-cmd-OPmodeRel2" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-cmd-OPmodeRel3" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-cmd-FaultReset" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-Halt" halType="bit"/>    <!-- Pause-->
+                        <complexEntry bitLen="7"/>
+                    </pdoEntry>
+                    <pdoEntry idx="607A" subIdx="00" bitLen="32" halPin="poscmd" halType="float" scale="-1000"/>
+                    <pdoEntry idx="6081" subIdx="00" bitLen="32" halPin="ProfileVelocity" halType="u32" />
+                    <pdoEntry idx="6083" subIdx="00" bitLen="32" halPin="target-acceleration" halType="u32" />
+                    <pdoEntry idx="6084" subIdx="00" bitLen="32" halPin="target-deceleration" halType="u32" />
+                    <pdoEntry idx="6060" subIdx="00" bitLen="8" halPin="opmode" halType="bit" />
+                </pdo>
+		    </syncManager>
+		    <!-- TxPdo -->
+		    <syncManager idx="3" dir="in">
+                <pdo idx="1a00">
+                    <pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="LastErrorCode" halType="s32" />
+                    <pdoEntry idx="6041" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="X-stat-ReadyToSwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-SwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-OperationEnable" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-Fault" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-VoltageEnabled" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-QuickStop" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-SwitchOnDisable" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-Warning" halType="bit"/>
+                        <complexEntry bitLen="1"/>
+                        <complexEntry bitLen="1" halPin="X-stat-Remote" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-TargetIsReached" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-OPmodeRel1" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="X-stat-OPmodeRel2" halType="bit"/>
+                        <complexEntry bitLen="3"/>
+                    </pdoEntry>  
+                    <pdoEntry idx="6061" subIdx="00" bitLen="8" halPin="opmode-fb" halType="s32" />
+                    <pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="actpos" halType="float" scale="-0.001" />
+                    <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touchProbeStatus" halType="u32" />
+                    <pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="TouchProbe1PosVal" halType="s32" />
+                    <pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="actual-velocity" halType="s32" />
+                    <!--Digital Inputs-->
+                    <pdoEntry idx="60FD" subIdx="00" bitLen="32" halType="complex">
+                        <complexEntry bitLen="1" halPin="NegLimit" halType="bit"/> <!--I5-->>
+                        <complexEntry bitLen="1" halPin="PosLimit" halType="bit"/> <!--I4-->>
+                        <complexEntry bitLen="1" halPin="in-home" halType="bit"/> <!--I3-->>
+                        <complexEntry bitLen="6"/>
+                        <complexEntry bitLen="1" halPin="in-6" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-7" halType="bit"/>
+                        <complexEntry bitLen="5"/>
+                            <complexEntry bitLen="1" halPin="EMG" halType="bit"/> <!--Quick stop ,bit16-->
+                            <complexEntry bitLen="9"/>
+                            <complexEntry bitLen="1" halPin="Probe1" halType="bit"/> <!--I1-->>
+                            <complexEntry bitLen="1" halPin="Probe2" halType="bit"/> <!--I2-->>
+                            <complexEntry bitLen="4"/>
+                        </pdoEntry>
+                    </pdo>
+                </syncManager> 
+            </slave>
+        <!--joint 1-->
+		<slave idx="2" type="generic" vid="00004321" pid="00000100" configPdos="true">
+		    <dcConf assignActivate="0300" sync0Cycle="*1" sync0Shift="0" />
+            <!-- RxPdo -->
+            <syncManager idx="2" dir="out">
+                <pdo idx="1600">
+                    <pdoEntry idx="6040" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="Y-cmd-SwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-cmd-EnableVoltage" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-cmd-QuickStop" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-cmd-EnableOperation" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-cmd-OPmodeRel1" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-cmd-OPmodeRel2" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-cmd-OPmodeRel3" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-cmd-FaultReset" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-Halt" halType="bit"/>    <!-- Pause-->
+                        <complexEntry bitLen="7"/>
+                    </pdoEntry>
+                    <pdoEntry idx="607A" subIdx="00" bitLen="32" halPin="poscmd" halType="float" scale="1000"/>
+                    <pdoEntry idx="6081" subIdx="00" bitLen="32" halPin="ProfileVelocity" halType="u32" />
+                    <pdoEntry idx="6083" subIdx="00" bitLen="32" halPin="target-acceleration" halType="u32" />
+                    <pdoEntry idx="6084" subIdx="00" bitLen="32" halPin="target-deceleration" halType="u32" />
+                    <pdoEntry idx="6060" subIdx="00" bitLen="8" halPin="opmode" halType="bit" />
+                </pdo>
+            </syncManager>
+            <!-- TxPdo -->
+            <syncManager idx="3" dir="in">
+                <pdo idx="1a00">
+                    <pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="LastErrorCode" halType="s32" />
+                    <pdoEntry idx="6041" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="Y-stat-ReadyToSwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-SwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-OperationEnable" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-Fault" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-VoltageEnabled" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-QuickStop" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-SwitchOnDisable" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-Warning" halType="bit"/>
+                        <complexEntry bitLen="1"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-Remote" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-TargetIsReached" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-OPmodeRel1" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Y-stat-OPmodeRel2" halType="bit"/>
+                        <complexEntry bitLen="3"/>
+                    </pdoEntry>  
+                    <pdoEntry idx="6061" subIdx="00" bitLen="8" halPin="opmode-fb" halType="s32" />
+                    <pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="actpos" halType="float" scale="0.001" />
+                    <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touchProbeStatus" halType="u32" />
+                    <pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="TouchProbe1PosVal" halType="s32" />
+                    <pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="actual-velocity" halType="s32" />
+                    <!--Digital Inputs-->
+                    <pdoEntry idx="60FD" subIdx="00" bitLen="32" halType="complex">
+                        <complexEntry bitLen="1" halPin="NegLimit" halType="bit"/> <!--I5-->>
+                        <complexEntry bitLen="1" halPin="PosLimit" halType="bit"/> <!--I4-->>
+                        <complexEntry bitLen="1" halPin="in-home" halType="bit"/> <!--I3-->>
+                        <complexEntry bitLen="6"/>
+                        <complexEntry bitLen="1" halPin="in-6" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-7" halType="bit"/>
+                        <complexEntry bitLen="5"/>
+                            <complexEntry bitLen="1" halPin="EMG" halType="bit"/> <!--Quick stop ,bit16-->
+                            <complexEntry bitLen="9"/>
+                            <complexEntry bitLen="1" halPin="Probe1" halType="bit"/> <!--I1-->>
+                            <complexEntry bitLen="1" halPin="Probe2" halType="bit"/> <!--I2-->>
+                            <complexEntry bitLen="4"/>
+                        </pdoEntry>
+                    </pdo>
+                </syncManager>
+		</slave>
+        <!--joint 2-->
+		<slave idx="3" type="generic" vid="00004321" pid="00000100" configPdos="true">
+		    <dcConf assignActivate="0300" sync0Cycle="*1" sync0Shift="0" />
+            <!-- RxPdo -->
+            <syncManager idx="2" dir="out">
+                <pdo idx="1600">
+                    <pdoEntry idx="6040" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="Z-cmd-SwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-cmd-EnableVoltage" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-cmd-QuickStop" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-cmd-EnableOperation" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-cmd-OPmodeRel1" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-cmd-OPmodeRel2" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-cmd-OPmodeRel3" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-cmd-FaultReset" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-Halt" halType="bit"/>    <!-- Pause-->
+                        <complexEntry bitLen="7"/>
+                    </pdoEntry>
+                    <pdoEntry idx="607A" subIdx="00" bitLen="32" halPin="poscmd" halType="float" scale="1000"/>
+                    <pdoEntry idx="6081" subIdx="00" bitLen="32" halPin="ProfileVelocity" halType="u32" />
+                    <pdoEntry idx="6083" subIdx="00" bitLen="32" halPin="target-acceleration" halType="u32" />
+                    <pdoEntry idx="6084" subIdx="00" bitLen="32" halPin="target-deceleration" halType="u32" />
+                    <pdoEntry idx="6060" subIdx="00" bitLen="8" halPin="opmode" halType="bit" />
+                </pdo>
+            </syncManager>
+            <!-- TxPdo -->
+            <syncManager idx="3" dir="in">
+                <pdo idx="1a00">
+                    <pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="LastErrorCode" halType="s32" />
+                    <pdoEntry idx="6041" subIdx="00" bitLen="16" halType="complex">
+                        <complexEntry bitLen="1" halPin="Z-stat-ReadyToSwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-SwitchOn" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-OperationEnable" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-Fault" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-VoltageEnabled" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-QuickStop" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-SwitchOnDisable" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-Warning" halType="bit"/>
+                        <complexEntry bitLen="1"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-Remote" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-TargetIsReached" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-OPmodeRel1" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="Z-stat-OPmodeRel2" halType="bit"/>
+                        <complexEntry bitLen="3"/>
+                    </pdoEntry>  
+                    <pdoEntry idx="6061" subIdx="00" bitLen="8" halPin="opmode-fb" halType="s32" />
+                    <pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="actpos" halType="float" scale="0.001" />
+                    <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touchProbeStatus" halType="u32" />
+                    <pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="TouchProbe1PosVal" halType="s32" />
+                    <pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="actual-velocity" halType="s32" />
+                    <!--Digital Inputs-->
+                    <pdoEntry idx="60FD" subIdx="00" bitLen="32" halType="complex">
+                        <complexEntry bitLen="1" halPin="NegLimit" halType="bit"/> <!--I5-->>
+                        <complexEntry bitLen="1" halPin="PosLimit" halType="bit"/> <!--I4-->>
+                        <complexEntry bitLen="1" halPin="in-home" halType="bit"/> <!--I3-->>
+                        <complexEntry bitLen="6"/>
+                        <complexEntry bitLen="1" halPin="in-6" halType="bit"/>
+                        <complexEntry bitLen="1" halPin="in-7" halType="bit"/>
+                        <complexEntry bitLen="5"/>
+                            <complexEntry bitLen="1" halPin="EMG" halType="bit"/> <!--Quick stop ,bit16-->
+                            <complexEntry bitLen="9"/>
+                            <complexEntry bitLen="1" halPin="Probe1" halType="bit"/> <!--I1-->>
+                            <complexEntry bitLen="1" halPin="Probe2" halType="bit"/> <!--I2-->>
+                            <complexEntry bitLen="4"/>
+                        </pdoEntry>
+                    </pdo>
+                </syncManager>
+		</slave>
+	</master>
+</masters> 
